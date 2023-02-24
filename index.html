@@ -1,11 +1,46 @@
 <!DOCTYPE html>
-  <html>
+<html>
     <head>
-      <title>Engine Town</title>
+        <title>Image drawing</title>
+        <style>
+            #tile{
+                display: none;
+            }
+            #myCanvas{
+                overflow: scroll;
+                background-color: black;
+            }
+            html { 
+                height: 100%; 
+                overflow:auto; 
+            }
+            body { 
+                background-color: black;
+                height: 100%; 
+            }
+            .btn{
+                position: fixed;
+                width: 100px;
+                height: 100px;
+                bottom: 0px;
+                right: 0px;
+                cursor: pointer;
+                border-top-left-radius: 50px;
+                border-bottom-left-radius: 50px;
+                background-image: url("assets/Store.png");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
     </head>
-    
     <body>
-      <script src = "game.js"></script>
+        <img id = "tile" src="assets/Tiles.png" />
+        
+        <canvas id = "myCanvas"></canvas>
+        <button class = "btn"></button>
+
+        <script src = "game.js"></script>
+        <script type="module" src="menus/start_menu.js"></script>
     </body>
-  
-  </html>
+</html>
