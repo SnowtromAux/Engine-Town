@@ -2,43 +2,45 @@
 <html>
     <head>
         <title>Image drawing</title>
-        <style>
-            #tile{
-                display: none;
-            }
-            #myCanvas{
-                overflow: scroll;
-                background-color: black;
-            }
-            html { 
-                height: 100%; 
-                overflow:auto; 
-            }
-            body { 
-                background-color: black;
-                height: 100%; 
-            }
-            .btn{
-                position: fixed;
-                width: 100px;
-                height: 100px;
-                bottom: 0px;
-                right: 0px;
-                cursor: pointer;
-                border-top-left-radius: 50px;
-                border-bottom-left-radius: 50px;
-                background-image: url("assets/Store.png");
-                background-size: cover;
-                background-position: center;
-                background-repeat: no-repeat;
-            }
-        </style>
+        <link rel = "stylesheet" href = "styles.css">
     </head>
     <body>
         <img id = "tile" src="assets/Tiles.png" />
         
         <canvas id = "myCanvas"></canvas>
-        <button class = "btn"></button>
+
+        <div id = "shop"></div>
+        <button class = "shop-activate"></button>
+
+        <div id = "resource-bar">
+            <div class = "resource">
+                <img src="assets/Gem.png" id = "resource-gem">
+                <div id = "gems"></div>
+                <button class = "buy-resource">+</button>
+            </div>
+
+            <div class = "resource">
+                <img src="assets/Coin.png" id = "resource-coin">
+                <div id = "coins"></div>
+                <button class = "buy-resource">+</button>
+            </div>
+
+            <div class = "resource">
+                <img src = "assets/Wood.png"; id = "resource-wood">
+                <div id = "wood"></div>
+                <button class = "buy-resource">+</button>
+            </div>
+
+            <div class = "resource">
+                <img src = "assets/Stone.png"; id = "resource-stone">
+                <div id = "stone"></div>
+                <button class = "buy-resource">+</button>
+            </div>
+        </div>
+        
+        
+
+        
 
         <script src = "game.js"></script>
         <script type="module" src="menus/start_menu.js"></script>

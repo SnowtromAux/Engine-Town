@@ -5,7 +5,7 @@ async function fetchData() {
   info = data;
 }
 
-function StartMenu(){
+function setupStartMenu(){
     var c = document.getElementById("myCanvas");
     var ctx = c.getContext("2d");
 
@@ -195,5 +195,105 @@ function StartMenu(){
 
 
 fetchData().then(() => {
-   StartMenu();
+   setupStartMenu();
 });
+
+const shop_activate = document.getElementsByClassName('shop-activate')[0];
+const shop = document.getElementById('shop'); 
+
+shop_activate.addEventListener('click', () => {
+  shop.style.right = shop.style.right === '0px' ? '-300px' : '0px';
+  shop_activate.style.right = shop_activate.style.right === '300px' ? '0px' : '300px';
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//------------------------------------------
+//------------------------------------------
+//------------------------------------------
+//------------------------------------------
+//------------------------------------------
+//BUILDINGS
+class Resources{
+    constructor(){
+        this.gems = 150;
+        this.coins = 1000;
+        this.wood = 100;
+        this.stone = 100;
+    }
+}
+
+class GoldStorage{
+    constructor(){
+        this.level = 1;
+    }
+}
+
+class WoodStorage{
+    constructor(){
+        this.level = 1;
+    }
+}
+
+class StoneStorage{
+    constructor(){
+        this.level = 1;
+    }
+}
+
+
+const main_castle_gold = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
+const main_castle_wood = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
+const main_castle_stone = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
+class MainCastle{
+    constructor(){
+        this.level = 1;
+    }
+
+    goldStorage(){
+        return main_castle_gold[this.level];
+    }
+
+    woodStorage(){
+        return main_castle_wood[this.level];
+    }
+
+    stoneStorage(){
+        return main_castle_stone[this.level];
+    }
+}
+
+let resources = new Resources();
+let gold_storages = [];
+let wood_storages = [];
+let stone_storages = [];
+let main_castle = new MainCastle();
+
+let gem_container = document.getElementById("gems");
+gem_container.innerHTML = resources.gems;
+
+let coins_container = document.getElementById("coins");
+coins_container.innerHTML = resources.coins;
+
+let wood_container = document.getElementById("wood");
+wood_container.innerHTML = resources.wood;
+
+let stone_container = document.getElementById("stone");
+stone_container.innerHTML = resources.wood;

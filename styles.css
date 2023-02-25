@@ -1,0 +1,103 @@
+#tile{
+    display: none;
+}
+
+#myCanvas{
+    overflow: scroll;
+    background-color: black;
+}
+
+html { 
+    height: 100%; 
+    overflow:auto; 
+}
+
+body { 
+    background-color: black;
+    height: 100%; 
+}
+
+.shop-activate{
+    position: fixed;
+    width: 10vh;
+    height: 10vh;
+    bottom: 0px;
+    right: 0px;
+    cursor: pointer;
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+    background-image: url("assets/Store.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: right 0.5s ease-in-out;
+    border: 5px solid black;
+    margin-right: -5px;
+}
+
+#shop {
+    width: 300px;
+    position: fixed;
+    background-color: #ccc;
+    transition: right 0.5s ease-in-out;
+    top: 0px;
+    right: -300px;
+    height: 100vh;
+    box-sizing: border-box;
+    border: 5px solid black;
+}
+
+#resource-bar{
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 20vw;
+    height: 30vh;
+    padding: 5px;
+}
+
+.resource{
+    display: flex;
+    margin-top: 2.5vh;
+    align-items: center;
+    /* border: 1px solid black; */
+    height: 8vh;
+}
+
+#resource-gem, #resource-coin, #resource-wood, #resource-stone{
+    height: 100%;
+    border: 2px solid black;
+}
+
+#gems, #coins, #wood, #stone{
+    display: flex;
+    width: 100%;
+    height: 80%;
+    border: 1px solid black;
+    justify-content: center;
+    align-items: center;
+}
+
+#gems, #resource-gem{
+    background-color: #b3d1ff;
+}
+
+#coins, #resource-coin{
+    background-color: #ffffb3;
+}
+
+#wood, #resource-wood{
+    background-color:  #e6cab3;
+}
+
+#stone, #resource-stone{
+    background-color: #f2f2f2;
+}
+
+.buy-resource{
+    position: absolute;
+    right: -0.5vw;
+    width: 2vw;
+    height: 2vw;
+    border-radius: 50%;   
+}
