@@ -60,22 +60,22 @@ body {
     display: flex;
     margin-top: 2.5vh;
     align-items: center;
-    /* border: 1px solid black; */
-    height: 8vh;
+    height: 6vh;
 }
 
-#resource-gem, #resource-coin, #resource-wood, #resource-stone{
+#resource-gem, #resource-coin, #resource-wood, #resource-stone, #resource-energy, #resource-xp{
     height: 100%;
     border: 2px solid black;
 }
 
-#gems, #coins, #wood, #stone{
-    display: flex;
+#gems, #coins, #wood, #stone, #energy, #xp{
+    position: relative;
     width: 100%;
     height: 80%;
     border: 1px solid black;
-    justify-content: center;
-    align-items: center;
+    border-bottom-right-radius: 12.5px;
+    border-top-right-radius: 12.5px;
+    font-size: 3vh;
 }
 
 #gems, #resource-gem{
@@ -94,10 +94,83 @@ body {
     background-color: #f2f2f2;
 }
 
+#energy, #resource-energy{
+    background-color: lime;
+}
+
+#xp, #resource-xp{
+    background-color: #b17cc4;
+}
+
 .buy-resource{
     position: absolute;
+    display: flex;
     right: -0.5vw;
     width: 2vw;
     height: 2vw;
     border-radius: 50%;   
+    font-size: 2vh;
+    justify-content: center;
+    align-items: center;
+}
+
+#coin-amount, #wood-amount, #stone-amount, #gem-amount, #energy-amount, #xp-amount{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#coin-total-coins, #wood-total-wood, #stone-total-stones, #energy-total-energy, #xp-total-xp{
+    height: 100%;
+    border-right-style: ridge;
+    border-bottom-right-radius: 12.5px;
+    border-top-right-radius: 12.5px;
+}
+
+#coin-total-coins{
+    background-color: yellow;
+}
+
+#wood-total-wood{
+    background-color: brown;
+}
+
+#stone-total-stones{
+    background-color: gray;
+}
+
+#energy-total-energy{
+    background-color: green;
+}
+
+
+#city-level-bar{
+    position: fixed;
+    top: 0.5vh;
+    left: 50%;
+    width: 20vw;
+    height: 8vh;
+    transform: translateX(-50%);
+}
+
+
+#xp-total-xp{
+    width: 50%;
+    background-color: purple;
+}
+
+#city-lvl{
+    position: absolute;
+    color: gray;
+    font-weight: bold;
+    font-size: 2vh;
+}
+
+#omg{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Image drawing</title>
+        <title>Engine Town</title>
         <link rel = "stylesheet" href = "styles.css">
     </head>
     <body>
@@ -15,26 +15,62 @@
         <div id = "resource-bar">
             <div class = "resource">
                 <img src="assets/Gem.png" id = "resource-gem">
-                <div id = "gems"></div>
+                <div id = "gems">
+                    <label id = "gem-amount"></label>
+                </div>
                 <button class = "buy-resource">+</button>
             </div>
 
             <div class = "resource">
                 <img src="assets/Coin.png" id = "resource-coin">
-                <div id = "coins"></div>
+                <div id = "coins">
+                    <label id = "coin-amount"></label>
+                    <div id = "coin-total-coins"></div>
+                </div>
+
                 <button class = "buy-resource">+</button>
             </div>
 
             <div class = "resource">
                 <img src = "assets/Wood.png"; id = "resource-wood">
-                <div id = "wood"></div>
+                <div id = "wood">
+                    <label id = "wood-amount"></label>
+                    <div id = "wood-total-wood"></div>
+                </div>
                 <button class = "buy-resource">+</button>
             </div>
 
             <div class = "resource">
                 <img src = "assets/Stone.png"; id = "resource-stone">
-                <div id = "stone"></div>
+                <div id = "stone">
+                    <label id = "stone-amount"></label>
+                    <div id = "stone-total-stones"></div>
+                </div>
                 <button class = "buy-resource">+</button>
+            </div>
+
+            <div class = "resource">
+                <img src = "assets/Energy.png"; id = "resource-energy">
+                <div id = "energy">
+                    <label id = "energy-amount"></label>
+                    <div id = "energy-total-energy"></div>
+                </div>
+                <button class = "buy-resource">+</button>
+            </div>
+        </div>
+
+        <div id = "city-level-bar">
+            <div class = "resource">
+                <div id = "omg">
+                    <label id = "city-lvl">1</label>         
+                    <img src="assets/Star.png" id = "resource-xp">
+                </div>
+            
+
+                <div id = "xp">
+                    <label id = "xp-amount"></label>
+                    <div id = "xp-total-xp"></div>
+                </div>
             </div>
         </div>
         

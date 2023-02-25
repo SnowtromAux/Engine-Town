@@ -198,13 +198,13 @@ fetchData().then(() => {
    setupStartMenu();
 });
 
+
 const shop_activate = document.getElementsByClassName('shop-activate')[0];
 const shop = document.getElementById('shop'); 
 
 shop_activate.addEventListener('click', () => {
   shop.style.right = shop.style.right === '0px' ? '-300px' : '0px';
   shop_activate.style.right = shop_activate.style.right === '300px' ? '0px' : '300px';
-
 });
 
 
@@ -231,69 +231,114 @@ shop_activate.addEventListener('click', () => {
 //------------------------------------------
 //------------------------------------------
 //BUILDINGS
+let storage_coin = 500, storage_wood = 200, storage_stone = 0, storage_energy = 50;
 class Resources{
     constructor(){
+        this.city_level = 1;
         this.gems = 150;
-        this.coins = 1000;
+        this.coins = 250;
         this.wood = 100;
-        this.stone = 100;
+        this.stone = 0;
+        this.energy = 30;
+        this.xp = 0;
     }
 }
 
-class GoldStorage{
+const coin_storage = [0, 400, 500, 600, 800, 1000];
+class CoinStorage{
     constructor(){
         this.level = 1;
     }
 }
 
+const wood_storage = [0, 400, 500, 600, 800, 1000];
 class WoodStorage{
     constructor(){
         this.level = 1;
     }
 }
 
+const stone_storage = [0, 400, 500, 600, 800, 1000];
 class StoneStorage{
+    constructor(){
+        this.level = 1;
+    }
+}
+const energy_storage = [0, 400, 500, 600, 800, 1000];
+class EnergyStorage{
     constructor(){
         this.level = 1;
     }
 }
 
 
-const main_castle_gold = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
+const main_castle_coin = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
 const main_castle_wood = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
 const main_castle_stone = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
 class MainCastle{
     constructor(){
         this.level = 1;
     }
-
-    goldStorage(){
-        return main_castle_gold[this.level];
-    }
-
-    woodStorage(){
-        return main_castle_wood[this.level];
-    }
-
-    stoneStorage(){
-        return main_castle_stone[this.level];
-    }
 }
 
 let resources = new Resources();
-let gold_storages = [];
+let coin_storages = [];
 let wood_storages = [];
 let stone_storages = [];
 let main_castle = new MainCastle();
 
-let gem_container = document.getElementById("gems");
+const levels_xp = [0, 100, 200, 300, 400, 500]
+
+let gem_container = document.getElementById("gem-amount");
 gem_container.innerHTML = resources.gems;
 
-let coins_container = document.getElementById("coins");
+
+let coins_container = document.getElementById("coin-amount");
+let coin_part = document.getElementById("coin-total-coins");
 coins_container.innerHTML = resources.coins;
+coin_part.style.width = calculateCoinsPart() + "%";
 
-let wood_container = document.getElementById("wood");
+
+let wood_container = document.getElementById("wood-amount");
+let wood_part = document.getElementById("wood-total-wood");
 wood_container.innerHTML = resources.wood;
+wood_part.style.width = calculateWoodPart() + "%";
 
-let stone_container = document.getElementById("stone");
-stone_container.innerHTML = resources.wood;
+
+let stone_container = document.getElementById("stone-amount");
+let stone_part = document.getElementById("stone-total-stones");
+stone_container.innerHTML = resources.stone;
+stone_part.style.width = calculateStonePart() + "%";
+
+let energy_container = document.getElementById("energy-amount");
+let energy_part = document.getElementById("energy-total-energy");
+energy_container.innerHTML = resources.energy;
+energy_part.style.width = calculateEnergyPart() + "%";
+
+let xp_container = document.getElementById("xp-amount");
+let xp_part = document.getElementById("xp-total-xp");
+xp_container.innerHTML = resources.xp;
+xp_part.style.width = calculateXpPart() + "%";
+
+function calculateCoinsPart(){
+    return resources.coins / storage_coin * 100;
+}
+
+function calculateWoodPart(){
+    return resources.wood / storage_wood * 100;
+}
+
+function calculateStonePart(){
+    if(storage_stone == 0)return 0;
+    return resources.stone / storage_stone * 100;
+}
+
+function calculateEnergyPart(){
+    if(storage_energy == 0)return 0;
+    return resources.energy / storage_energy * 100;
+}
+
+function calculateXpPart(){
+    console.log(resources.xp / levels_xp[resources.lvl] * 100)
+    return resources.xp / levels_xp[resources.city_level] * 100;
+}
