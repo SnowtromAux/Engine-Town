@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Image drawing</title>
+        <title>Engine Town</title>
         <link rel = "stylesheet" href = "styles.css">
     </head>
     <body>
@@ -9,32 +9,126 @@
         
         <canvas id = "myCanvas"></canvas>
 
-        <div id = "shop"></div>
+        <div id = "shop">
+            <div id = "top-shop">
+                <label id="shop-title">Shop</label>
+            </div>
+
+            <div id = "shop-buttons">
+                <button class = "shop-button"></button>
+                <button class = "shop-button"></button>
+                <button class = "shop-button"></button>
+                <button class = "shop-button"></button>
+            </div>
+
+            <ul id = "resource-buildings">
+                <li>
+                    <div class = "card-wrapper">
+                        <div class = "building-card">
+                            <div class = "card-left-side">
+                                <label class = "building-count">1 / 3</label>
+                                <img class = "building-image"; src = "assets/Wood_storage.png">
+                            </div>
+                            <div class = "info-wrapper">
+                                <div class = "building-info-box">
+                                    <div class = "resource-cost">
+                                        <img class = "shop-resource-cost-image"; src = "assets/Coin.png">
+                                        <label class = "resource-amount">x 100</label>
+                                    </div>
+
+                                    <div class = "resource-cost">
+                                        <img class = "shop-resource-cost-image"; src = "assets/Wood.png">
+                                        <label class = "resource-amount">x 0</label>
+                                    </div>
+
+                                    <div class = "resource-cost">
+                                        <img class = "shop-resource-cost-image"; src = "assets/Stone.png">
+                                        <label class = "resource-amount">x 0</label>
+                                    </div>
+
+                                    <div class = "resource-cost">
+                                        <img class = "shop-resource-cost-image"; src = "assets/Energy.png">
+                                        <label class = "resource-amount">x 5</label>
+                                    </div>
+
+                                    <div class = "resource-cost">
+                                        <img class = "shop-resource-cost-image"; src = "assets/Star.png">
+                                        <label class = "resource-amount">x 5</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class = "card-bottom-side">
+                            <label class = "building-name">Wood storage</label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        
+        
         <button class = "shop-activate"></button>
 
         <div id = "resource-bar">
             <div class = "resource">
                 <img src="assets/Gem.png" id = "resource-gem">
-                <div id = "gems"></div>
+                <div id = "gems">
+                    <label id = "gem-amount"></label>
+                </div>
                 <button class = "buy-resource">+</button>
             </div>
 
             <div class = "resource">
                 <img src="assets/Coin.png" id = "resource-coin">
-                <div id = "coins"></div>
+                <div id = "coins">
+                    <label id = "coin-amount"></label>
+                    <div id = "coin-total-coins"></div>
+                </div>
+
                 <button class = "buy-resource">+</button>
             </div>
 
             <div class = "resource">
                 <img src = "assets/Wood.png"; id = "resource-wood">
-                <div id = "wood"></div>
+                <div id = "wood">
+                    <label id = "wood-amount"></label>
+                    <div id = "wood-total-wood"></div>
+                </div>
                 <button class = "buy-resource">+</button>
             </div>
 
             <div class = "resource">
                 <img src = "assets/Stone.png"; id = "resource-stone">
-                <div id = "stone"></div>
+                <div id = "stone">
+                    <label id = "stone-amount"></label>
+                    <div id = "stone-total-stones"></div>
+                </div>
                 <button class = "buy-resource">+</button>
+            </div>
+
+            <div class = "resource">
+                <img src = "assets/Energy.png"; id = "resource-energy">
+                <div id = "energy">
+                    <label id = "energy-amount"></label>
+                    <div id = "energy-total-energy"></div>
+                </div>
+                <button class = "buy-resource">+</button>
+            </div>
+        </div>
+
+        <div id = "city-level-bar">
+            <div class = "resource">
+                <div id = "omg">
+                    <label id = "city-lvl">1</label>         
+                    <img src="assets/Star.png" id = "resource-xp">
+                </div>
+            
+
+                <div id = "xp">
+                    <label id = "xp-amount"></label>
+                    <div id = "xp-total-xp"></div>
+                </div>
             </div>
         </div>
         
@@ -43,6 +137,8 @@
         
 
         <script src = "game.js"></script>
-        <script type="module" src="menus/start_menu.js"></script>
+        
+        <script type="module" src="menus/Start menu/start_menu_draw.js"></script>
+        <script type="module" src="menus/Start menu/start_menu_click.js"></script>
     </body>
 </html>
