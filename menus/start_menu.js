@@ -19,7 +19,7 @@ function setupStartMenu(){
     const MAP_H = info.height;
 
     const CANVAS_W = c.width = MAP_W * TILE_W * 3 / 4 + 30;
-    const CANVAS_H = c.height =  (TILE_H / 2 + MAP_H * TILE_H) / 1.65;
+    const CANVAS_H = c.height =  (TILE_H / 2 + MAP_H * TILE_H) / 1.70;
 
     let zoom = 100;
     const MIN_ZOOM = 25;
@@ -45,7 +45,7 @@ function setupStartMenu(){
             const crop_x = (this.type % 8) * 32;
             const crop_y = Math.floor(this.type / 8) * 48;
             const crop_w = 32;
-            const crop_h = 48;
+            const crop_h = 47;
         
             ctx.drawImage(TILES_IMG , crop_x , crop_y, crop_w, crop_h, this.x, this.y - 64, this.w, this.h);
         }
@@ -153,7 +153,7 @@ function setupStartMenu(){
 
         for(let j = 0;j < MAP_W; j++){
             const x =  j * TILE_W * 3 / 4;
-            const y = ((j % 2) * TILE_H / 2 + i * TILE_H) / 1.65;
+            const y = ((j % 2) * TILE_H / 2 + i * TILE_H) / 1.70;
             const type =  info.layers[0].data[i * MAP_W + j] - 1;
 
             let occupied;
@@ -203,8 +203,8 @@ const shop_activate = document.getElementsByClassName('shop-activate')[0];
 const shop = document.getElementById('shop'); 
 
 shop_activate.addEventListener('click', () => {
-  shop.style.right = shop.style.right === '0px' ? '-300px' : '0px';
-  shop_activate.style.right = shop_activate.style.right === '300px' ? '0px' : '300px';
+  shop.style.right = shop.style.right === '0vw' ? '-27vw' : '0vw';
+  shop_activate.style.right = shop_activate.style.right === '27vw' ? '0vw' : '27vw';
 });
 
 
@@ -231,16 +231,16 @@ shop_activate.addEventListener('click', () => {
 //------------------------------------------
 //------------------------------------------
 //BUILDINGS
-let storage_coin = 500, storage_wood = 200, storage_stone = 0, storage_energy = 50;
+let storage_coin = 500, storage_wood = 200, storage_stone = 1000, storage_energy = 50;
 class Resources{
     constructor(){
         this.city_level = 1;
         this.gems = 150;
         this.coins = 250;
         this.wood = 100;
-        this.stone = 0;
+        this.stone = 100;
         this.energy = 30;
-        this.xp = 0;
+        this.xp = 35;
     }
 }
 
