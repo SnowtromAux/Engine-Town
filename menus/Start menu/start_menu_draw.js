@@ -239,7 +239,7 @@ shop_activate.addEventListener('click', () => {
 //------------------------------------------
 //------------------------------------------
 //------------------------------------------
-//BUILDINGS
+//BUILDINGS and RESOURCES
 let storage_coin = 500, storage_wood = 200, storage_stone = 1000, storage_energy = 50;
 class Resources{
     constructor(){
@@ -350,3 +350,17 @@ function calculateEnergyPart(){
 function calculateXpPart(){
     return resources.xp / levels_xp[resources.city_level] * 100;
 }
+
+
+
+
+
+
+
+
+//------------------------------------------
+//------------------------------------------
+//------------------------------------------
+//------------------------------------------
+//------------------------------------------
+//SHOP

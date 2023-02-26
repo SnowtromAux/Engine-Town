@@ -187,7 +187,6 @@ body {
     align-items: center;
     justify-content: center;
     height: 8vh;
-    width: 100%;
     border-bottom-style: double;
 }
 
@@ -261,10 +260,9 @@ body {
     margin-left: 0.75vw;
 }
 
-.info-wrapper{
-    width: 100%;
-    display: flex;
-}
+/* .info-wrapper{
+    
+} */
 
 .card-wrapper{
     margin-bottom: 1.5vh;
@@ -284,7 +282,6 @@ body {
 
 .building-name{
     font-size: 3vh;
-    margin-bottom: 1vh;
 }
 
 .card-left-side{
