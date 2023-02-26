@@ -1,6 +1,6 @@
 let info;
 async function fetchData() {
-  const response = await fetch('main_map.json');
+  const response = await fetch('/menus/Start menu/main_map.json');
   const data = await response.json();
   info = data;
 }
@@ -208,7 +208,7 @@ fetchData().then(() => {
 });
 
 
-const shop_activate = document.getElementsByClassName('shop-activate')[0];
+const shop_activate = document.getElementById('shop-activate');
 const shop = document.getElementById('shop'); 
 
 shop_activate.addEventListener('click', () => {

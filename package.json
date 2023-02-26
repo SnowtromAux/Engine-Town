@@ -1,0 +1,23 @@
+{
+  "name": "engine-town",
+  "version": "1.0.0",
+  "description": "Things that we would use for the game",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sass": "node-sass styles/scss/main.scss styles/css/styles.css -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SnowtromAux/Engine-Town.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SnowtromAux/Engine-Town/issues"
+  },
+  "homepage": "https://github.com/SnowtromAux/Engine-Town#readme",
+  "dependencies": {
+    "node-sass": "^8.0.0"
+  }
+}
