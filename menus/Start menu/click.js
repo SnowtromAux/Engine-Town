@@ -53,15 +53,17 @@ function drawBuyBuilding(e, path){
 
 c.addEventListener("mousemove" , (e) => {
     if(!buy_building.image)return;
-    ctx.clearRect(0, 0, c.width, c.height);
-    drawEverything();
+  
 
     const j = Math.floor(e.pageX / TILE_W * 4 / 3);
     const i = Math.floor(((1.70 * e.pageY - (j % 2) * TILE_H))/ TILE_H);
     closeShop();
-
+    
+    if(i >= MAP_H || j >= MAP_H || i < 0 || j< 0)return;
+    ctx.clearRect(0, 0, c.width, c.height);
+    drawEverything();
     ctx.drawImage(buy_building.image, tiles[i][j].x + (TILE_W - 110) / 2, tiles[i][j].y + (TILE_H - 110) / 2 - 36, 110, 110);
-
+    
 })
 
 c.addEventListener("click", (e) => {
@@ -76,26 +78,26 @@ c.addEventListener("click", (e) => {
 
         const building_x = tiles[i][j].x + (TILE_W - 110) / 2;
         const building_y =  tiles[i][j].y + (TILE_H - 110) / 2 - 36;
-        console.log(shop_buildings)
 
+        console.log("here")
         if(!tiles[i][j].occupied){
-            console.log("1")
             
         }else if(tiles[i][j].hasBuilding){
 
-            console.log("2")
         }else if(cur_building_selected.owned == cur_building_selected.count){
-            console.log("3")
 
         }else if(cur_building_selected.coin_cost > player.coins || cur_building_selected.wood_cost > player.wood || 
                  cur_building_selected.stone_cost > player.stone || cur_building_selected.energy_cost + player.energy > player.storage_energy){
-                    console.log("4")
 
         }else{
-            console.log("5")
-
+            console.log(tiles[i][j].hasBuilding)
             ctx.drawImage(buy_building.image, building_x, building_y, 110, 110);
             tiles[i][j].hasBuilding = true;
+            console.log(tiles[i][j])
+            tiles[i][j].buildsrc = buy_building.image;
+            //If the upper one doesnt work
+            //tiles[i][j].buildsrc = buy_building.image.src;
+
             buildings_bought.push(new Buildings_Bought(building_x, building_y, buy_building.image));
             shop_buildings.get(buy_building.image.src).buy();
             shop_buildings.get(buy_building.image.src).update();

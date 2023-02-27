@@ -32,6 +32,7 @@ class Tile{
       this.ind2 = ind2;
       this.occupied = occupied;
       this.hasBuilding = false;
+      this.buildsrc = undefined;
       // this.difficulty = difficulty;
 
       this.w = TILE_W;
@@ -167,26 +168,28 @@ function drawStartMenu(){
     CANVAS_H = c.height =  (TILE_H / 2 + MAP_H * TILE_H) / 1.70;
     //--------------
     //TILES CREATING
-    for(let i = 0;i < MAP_H;i++){
-        tiles[i] = [];
+    if(tiles.length == 0){
+        for(let i = 0;i < MAP_H;i++){
+            tiles[i] = [];
 
-        for(let j = 0;j < MAP_W; j++){
-            const x =  j * TILE_W * 3 / 4;
-            const y = ((j % 2) * TILE_H / 2 + i * TILE_H) / 1.70;
-            const type =  info.layers[0].data[i * MAP_W + j] - 1;
+            for(let j = 0;j < MAP_W; j++){
+                const x =  j * TILE_W * 3 / 4;
+                const y = ((j % 2) * TILE_H / 2 + i * TILE_H) / 1.70;
+                const type =  info.layers[0].data[i * MAP_W + j] - 1;
 
-            let occupied;
-            if(i == 56 && j == 55 ||
-                i == 56 && j == 56 ||
-                i == 56 && j == 57 ||
-                i == 57 && j == 55 ||
-                i == 57 && j == 56 ||
-                i == 57 && j == 57 ||
-                i == 58 && j == 56)
-                occupied = true;
-            else occupied = false;
+                let occupied;
+                if(i == 56 && j == 55 ||
+                    i == 56 && j == 56 ||
+                    i == 56 && j == 57 ||
+                    i == 57 && j == 55 ||
+                    i == 57 && j == 56 ||
+                    i == 57 && j == 57 ||
+                    i == 58 && j == 56)
+                    occupied = true;
+                else occupied = false;
 
-            tiles[i][j] = new Tile(x, y, type, i, j, occupied);
+                tiles[i][j] = new Tile(x, y, type, i, j, occupied);
+            }
         }
     }
 

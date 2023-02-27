@@ -1,4 +1,28 @@
 let shop_buildings = new Map();
+
+
+class Player{
+    constructor(){
+        this.city_level = 1;
+        this.gems = 150;
+        this.coins = 250;
+        this.wood = 100;
+        this.stone = 100;
+        this.energy = 30;
+        this.xp = 35;
+        this.storage_coin = 500;
+        this.storage_wood = 200;
+        this.storage_stone = 100;
+        this.storage_energy = 50;
+    }
+
+    updateResources(){
+        addResources();
+    }
+}
+
+
+//SHOP BUILDINGSSSSS
 class Shop_WS{
     constructor(count){
         this.count = count;
@@ -32,27 +56,6 @@ let ws = new Shop_WS(3);
 ws.update(); 
 
 shop_buildings.set("http://127.0.0.1:5500/assets/Wood_storage.png", ws);
-
-class Player{
-    constructor(){
-        this.city_level = 1;
-        this.gems = 150;
-        this.coins = 250;
-        this.wood = 100;
-        this.stone = 100;
-        this.energy = 30;
-        this.xp = 35;
-        this.storage_coin = 500;
-        this.storage_wood = 200;
-        this.storage_stone = 100;
-        this.storage_energy = 50;
-    }
-
-    updateResources(){
-        addResources();
-    }
-}
-
 
 // class CoinStorage{
 //     constructor(){
