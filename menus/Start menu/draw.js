@@ -5,13 +5,8 @@ async function fetchData() {
   info = data;
 }
 
-
-
-
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
-
 const TILES_IMG = document.getElementById("tile");
+
 
 const TILE_W = 140;
 const TILE_H = 150;
@@ -28,7 +23,6 @@ const MAX_ZOOM = 200;
 let tiles = [];
 
 
-
 class Tile{
     constructor(x, y, type, ind1, ind2, occupied){
       this.x = x;
@@ -37,11 +31,11 @@ class Tile{
       this.ind1 = ind1;
       this.ind2 = ind2;
       this.occupied = occupied;
+      this.hasBuilding = false;
       // this.difficulty = difficulty;
 
       this.w = TILE_W;
       this.h = TILE_H;
-      
     }
 
     drawTile(){
@@ -147,7 +141,23 @@ class Layer2{
     }
 }
 
+class Buildings_Bought{
+    constructor(x, y, src/*, ind1, ind2*/){
+        this.x = x;
+        this.y = y;
+        this.src = src;
+        // this.ind1 = ind1;
+        // this.ind2 = ind2; 
+        this.w = 110;
+        this.h = 110;
+    }
 
+    draw(){
+        ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
+    }
+}
+
+let buildings_bought = [];
 
 function drawStartMenu(){
     MAP_W = info.width;
@@ -193,174 +203,76 @@ function drawStartMenu(){
         for(let j = 0;j < MAP_W; j++)
             tiles[i][j].drawWalls();
 
+    for(let i = 0;i < buildings_bought.length;i++){
+        buildings_bought[i].draw();
+    }
 
-    window.scrollBy(CANVAS_W, CANVAS_H);
+
     //document.body.style.zoom = `${ZOOM_LVL} % `;
 }
 
-
-
-
-
-
-fetchData().then(() => {
-   drawStartMenu();
-});
-
-
-const shop_activate = document.getElementById('shop-activate');
-const shop = document.getElementById('shop'); 
-
-shop_activate.addEventListener('click', () => {
-  shop.style.right = shop.style.right === '0vw' ? '-27vw' : '0vw';
-  shop_activate.style.right = shop_activate.style.right === '27vw' ? '0vw' : '27vw';
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//------------------------------------------
-//------------------------------------------
-//------------------------------------------
-//------------------------------------------
-//------------------------------------------
-//BUILDINGS and RESOURCES
-let storage_coin = 500, storage_wood = 200, storage_stone = 1000, storage_energy = 50;
-class Resources{
-    constructor(){
-        this.city_level = 1;
-        this.gems = 150;
-        this.coins = 250;
-        this.wood = 100;
-        this.stone = 100;
-        this.energy = 30;
-        this.xp = 35;
-    }
+function addResources(){
+    let gem_container = document.getElementById("gem-amount");
+    gem_container.innerHTML = player.gems;
+    
+    
+    let coins_container = document.getElementById("coin-amount");
+    let coin_part = document.getElementById("coin-total-coins");
+    coins_container.innerHTML = player.coins;
+    coin_part.style.width = calculateCoinsPart() + "%";
+    
+    
+    let wood_container = document.getElementById("wood-amount");
+    let wood_part = document.getElementById("wood-total-wood");
+    wood_container.innerHTML = player.wood;
+    wood_part.style.width = calculateWoodPart() + "%";
+    
+    
+    let stone_container = document.getElementById("stone-amount");
+    let stone_part = document.getElementById("stone-total-stones");
+    stone_container.innerHTML = player.stone;
+    stone_part.style.width = calculateStonePart() + "%";
+    
+    let energy_container = document.getElementById("energy-amount");
+    let energy_part = document.getElementById("energy-total-energy");
+    energy_container.innerHTML = player.energy;
+    energy_part.style.width = calculateEnergyPart() + "%";
+    
+    let xp_container = document.getElementById("xp-amount");
+    let xp_part = document.getElementById("xp-total-xp");
+    xp_container.innerHTML = player.xp;
+    xp_part.style.width = calculateXpPart() + "%";
 }
-
-const coin_storage = [0, 400, 500, 600, 800, 1000];
-class CoinStorage{
-    constructor(){
-        this.level = 1;
-    }
-}
-
-const wood_storage = [0, 400, 500, 600, 800, 1000];
-class WoodStorage{
-    constructor(){
-        this.level = 1;
-    }
-}
-
-const stone_storage = [0, 400, 500, 600, 800, 1000];
-class StoneStorage{
-    constructor(){
-        this.level = 1;
-    }
-}
-const energy_storage = [0, 400, 500, 600, 800, 1000];
-class EnergyStorage{
-    constructor(){
-        this.level = 1;
-    }
-}
-
-
-const main_castle_coin = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
-const main_castle_wood = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
-const main_castle_stone = [0, 3000, 6000, 9000, 12000, 16000, 19000, 22000, 25000, 28000, 31000, 34000, 37000, 40000, 43000];
-class MainCastle{
-    constructor(){
-        this.level = 1;
-    }
-}
-
-let resources = new Resources();
-let coin_storages = [];
-let wood_storages = [];
-let stone_storages = [];
-let main_castle = new MainCastle();
-
-const levels_xp = [0, 100, 200, 300, 400, 500]
-
-let gem_container = document.getElementById("gem-amount");
-gem_container.innerHTML = resources.gems;
-
-
-let coins_container = document.getElementById("coin-amount");
-let coin_part = document.getElementById("coin-total-coins");
-coins_container.innerHTML = resources.coins;
-coin_part.style.width = calculateCoinsPart() + "%";
-
-
-let wood_container = document.getElementById("wood-amount");
-let wood_part = document.getElementById("wood-total-wood");
-wood_container.innerHTML = resources.wood;
-wood_part.style.width = calculateWoodPart() + "%";
-
-
-let stone_container = document.getElementById("stone-amount");
-let stone_part = document.getElementById("stone-total-stones");
-stone_container.innerHTML = resources.stone;
-stone_part.style.width = calculateStonePart() + "%";
-
-let energy_container = document.getElementById("energy-amount");
-let energy_part = document.getElementById("energy-total-energy");
-energy_container.innerHTML = resources.energy;
-energy_part.style.width = calculateEnergyPart() + "%";
-
-let xp_container = document.getElementById("xp-amount");
-let xp_part = document.getElementById("xp-total-xp");
-xp_container.innerHTML = resources.xp;
-xp_part.style.width = calculateXpPart() + "%";
 
 function calculateCoinsPart(){
-    return resources.coins / storage_coin * 100;
+    return player.coins / player.storage_coin * 100;
 }
 
 function calculateWoodPart(){
-    return resources.wood / storage_wood * 100;
+    return player.wood / player.storage_wood * 100;
 }
 
 function calculateStonePart(){
-    if(storage_stone == 0)return 0;
-    return resources.stone / storage_stone * 100;
+    if(player.storage_stone == 0)return 0;
+    return player.stone / player.storage_stone * 100;
 }
 
 function calculateEnergyPart(){
-    if(storage_energy == 0)return 0;
-    return resources.energy / storage_energy * 100;
+    if(player.storage_energy == 0)return 0;
+    return player.energy / player.storage_energy * 100;
 }
 
 function calculateXpPart(){
-    return resources.xp / levels_xp[resources.city_level] * 100;
+    return player.xp / levels_xp[player.city_level] * 100;
 }
 
+function drawEverything(){
+    drawStartMenu();
+    addResources();
+}
 
+fetchData().then(() => {
+    drawEverything();
+    window.scrollBy(CANVAS_W, CANVAS_H);
+});
 
-
-
-
-
-
-//------------------------------------------
-//------------------------------------------
-//------------------------------------------
-//------------------------------------------
-//------------------------------------------
-//SHOP

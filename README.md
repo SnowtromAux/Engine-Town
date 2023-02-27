@@ -6,3 +6,12 @@ Things that we would use for the game
 - Javascript 
 - Socket.io or Firebase (need to be decided)
 - MongoDB
+
+-------------------------
+To install all extensions:
+- npm install
+<!-- - npm install node-sass -->
+
+to run sass:
+- npm run sass
+
