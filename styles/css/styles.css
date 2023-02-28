@@ -147,7 +147,8 @@ button {
   right: -27vw;
   height: 100vh;
   box-sizing: border-box;
-  border: 5px solid black; }
+  border: 5px solid black;
+  overflow: scroll; }
 
 #top-shop {
   display: flex;
@@ -217,3 +218,102 @@ button {
       border-top: 1px solid black; }
       .buildings-shop .card-wrapper .card-bottom-side .building-name {
         font-size: 3vh; }
+
+#bottom-middle-bar {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  bottom: 2vh;
+  left: 50%;
+  width: 15vw;
+  height: 8vw;
+  transform: translateX(-50%);
+  border: 3px solid black;
+  align-items: center;
+  border-radius: 10%;
+  background-color: brown; }
+  #bottom-middle-bar #building-text-holder {
+    cursor: pointer; }
+  #bottom-middle-bar #button-holders {
+    display: flex;
+    background-color: chocolate; }
+  #bottom-middle-bar #info-button, #bottom-middle-bar #upgrade-button {
+    width: 6vw;
+    height: 6vw;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat; }
+  #bottom-middle-bar #info-button {
+    background-image: url("../../assets/Info.png"); }
+  #bottom-middle-bar #upgrade-button {
+    background-image: url("../../assets/Upgrade.png");
+    margin-left: 3vw; }
+
+#upgrade-box {
+  position: fixed;
+  display: none;
+  flex-direction: column;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+  height: 50vh;
+  width: 50vw;
+  border: 3px solid black; }
+  #upgrade-box #upgrade-building-name {
+    width: 100%;
+    height: 5vh;
+    font-size: 5vh;
+    text-align: center;
+    border-bottom: 3px solid black;
+    background-color: chocolate; }
+    #upgrade-box #upgrade-building-name #exit-upgrade {
+      position: absolute;
+      width: 2vw;
+      height: 3vh;
+      right: 1vw;
+      top: 1vh;
+      border-radius: 50%; }
+  #upgrade-box #upgrade-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 100%; }
+    #upgrade-box #upgrade-wrapper #upg-img {
+      height: 100%;
+      border-right: 3px dashed black;
+      background-color: goldenrod; }
+      #upgrade-box #upgrade-wrapper #upg-img #upgrade-image {
+        width: 90%;
+        position: relative;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); }
+    #upgrade-box #upgrade-wrapper #upg-resources {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      background-color: darkgoldenrod; }
+      #upgrade-box #upgrade-wrapper #upg-resources .resource-cost {
+        display: flex;
+        align-items: center;
+        height: min-content;
+        /* margin-top: 2vh; */
+        border-bottom: 1px dashed;
+        background-color: burlywood; }
+        #upgrade-box #upgrade-wrapper #upg-resources .resource-cost .shop-resource-cost-image {
+          width: 16%; }
+        #upgrade-box #upgrade-wrapper #upg-resources .resource-cost .resource-amount {
+          margin-left: 0.75vw; }
+      #upgrade-box #upgrade-wrapper #upg-resources #upg-btn {
+        display: flex;
+        height: 100%;
+        justify-content: center;
+        align-items: center; }
+        #upgrade-box #upgrade-wrapper #upg-resources #upg-btn #upg-img-holder {
+          width: 80%;
+          height: 60%;
+          background-image: url("../../../assets/Upgrade_button.png");
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          cursor: pointer; }

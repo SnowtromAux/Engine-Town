@@ -28,6 +28,7 @@
     height: 100vh;
     box-sizing: border-box;
     border: 5px solid black;
+    overflow: scroll;
 }
 
 #top-shop{
@@ -130,5 +131,42 @@
             }
         }
     }
-    
+}
+
+#bottom-middle-bar{
+    position: fixed;
+    // display: flex;
+    display: none;
+    flex-direction: column;
+    bottom: 2vh;
+    left: 50%;
+    width: 15vw;
+    height: 8vw;
+    transform: translateX(-50%);
+    border: 3px solid black;
+    align-items: center;
+    border-radius: 10%;
+    background-color: brown;
+    #building-text-holder{
+        cursor: pointer;
+    }
+    #button-holders{
+        display: flex;
+        background-color: chocolate;
+    }
+    #info-button, #upgrade-button{
+        width: 6vw;
+        height: 6vw;
+        border-radius: 50%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    #info-button{
+        background-image: url("../../assets/Info.png");
+    }
+    #upgrade-button{
+        background-image: url("../../assets/Upgrade.png");
+        margin-left: 3vw;
+    }
 }

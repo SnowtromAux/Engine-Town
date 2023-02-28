@@ -9,138 +9,213 @@
         
         <canvas id = "myCanvas"></canvas>
 
-        <div id = "shop">
-            <div id = "top-shop">
-                <label id="shop-title">Shop</label>
-            </div>
-
-            <div id = "shop-buttons">
-                <button class = "shop-button"></button>
-                <button class = "shop-button"></button>
-                <button class = "shop-button"></button>
-                <button class = "shop-button"></button>
-            </div>
-
-            <ul class = "buildings-shop"; id = "resource-buildings">
-                <li id = "wood-storage-card">
-                    <div class = "card-wrapper">
-                        <div class = "building-card">
-                            <div class = "card-left-side">
-                                <label class = "building-count"></label>
-                                <img class = "building-image"; id = "wood-storage"; src = "assets/Wood_storage.png">
-                            </div>
-                            <div class = "info-wrapper">
-                                <div class = "card-right-side">
-                                    <div class = "resource-cost">
-                                        <img class = "shop-resource-cost-image"; src = "assets/Coin.png">
-                                        <label class = "resource-amount"></label>
-                                    </div>
-
-                                    <div class = "resource-cost">
-                                        <img class = "shop-resource-cost-image"; src = "assets/Wood.png">
-                                        <label class = "resource-amount"></label>
-                                    </div>
-
-                                    <div class = "resource-cost">
-                                        <img class = "shop-resource-cost-image"; src = "assets/Stone.png">
-                                        <label class = "resource-amount"></label>
-                                    </div>
-
-                                    <div class = "resource-cost">
-                                        <img class = "shop-resource-cost-image"; src = "assets/Energy.png">
-                                        <label class = "resource-amount"></label>
-                                    </div>
-
-                                    <div class = "resource-cost">
-                                        <img class = "shop-resource-cost-image"; src = "assets/Star.png">
-                                        <label class = "resource-amount"></label>
+        
+        <!-- Start menu -->
+        <div id="start-menu">
+            <div id = "shop">
+                <div id = "top-shop">
+                    <label id="shop-title">Shop</label>
+                </div>
+    
+                <div id = "shop-buttons">
+                    <button class = "shop-button"></button>
+                    <button class = "shop-button"></button>
+                    <button class = "shop-button"></button>
+                    <button class = "shop-button"></button>
+                </div>
+    
+                <ul class = "buildings-shop"; id = "resource-buildings">
+                    <li id = "wood-storage-card">
+                        <div class = "card-wrapper">
+                            <div class = "building-card">
+                                <div class = "card-left-side">
+                                    <label class = "building-count"></label>
+                                    <img class = "building-image"; id = "wood-storage-lvl1"; src = "assets/Wood_storage_lvl1.png">
+                                    <img class = "building-image"; id = "wood-storage-lvl2"; src = "assets/Wood_storage_lvl2.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl3"; src = "assets/Wood_storage_lvl3.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl4"; src = "assets/Wood_storage_lvl4.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl5"; src = "assets/Wood_storage_lvl5.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl6"; src = "assets/Wood_storage_lvl6.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl7"; src = "assets/Wood_storage_lvl7.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl8"; src = "assets/Wood_storage_lvl8.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl9"; src = "assets/Wood_storage_lvl9.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl10"; src = "assets/Wood_storage_lvl10.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl11"; src = "assets/Wood_storage_lvl11.png"; style="display:none">
+                                    <img class = "building-image"; id = "wood-storage-lvl12"; src = "assets/Wood_storage_lvl12.png"; style="display:none">
+    
+                                </div>
+                                <div class = "info-wrapper">
+                                    <div class = "card-right-side">
+                                        <div class = "resource-cost">
+                                            <img class = "shop-resource-cost-image"; src = "assets/Coin.png">
+                                            <label class = "resource-amount"></label>
+                                        </div>
+    
+                                        <div class = "resource-cost">
+                                            <img class = "shop-resource-cost-image"; src = "assets/Wood.png">
+                                            <label class = "resource-amount"></label>
+                                        </div>
+    
+                                        <div class = "resource-cost">
+                                            <img class = "shop-resource-cost-image"; src = "assets/Stone.png">
+                                            <label class = "resource-amount"></label>
+                                        </div>
+    
+                                        <div class = "resource-cost">
+                                            <img class = "shop-resource-cost-image"; src = "assets/Energy.png">
+                                            <label class = "resource-amount"></label>
+                                        </div>
+    
+                                        <div class = "resource-cost">
+                                            <img class = "shop-resource-cost-image"; src = "assets/Star.png">
+                                            <label class = "resource-amount"></label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+    
+                            <div class = "card-bottom-side">
+                                <label class = "building-name">Wood storage</label>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            
+            <button id = "shop-activate"></button>
+    
+            <div id = "resource-bar">
+                <div class = "resource">
+                    <img src="assets/Gem.png" id = "resource-gem">
+                    <div id = "gems">
+                        <label id = "gem-amount"></label>
+                    </div>
+                    <button class = "buy-resource">+</button>
+                </div>
+    
+                <div class = "resource">
+                    <img src="assets/Coin.png" id = "resource-coin">
+                    <div id = "coins">
+                        <label id = "coin-amount"></label>
+                        <div id = "coin-total-coins"></div>
+                    </div>
+    
+                    <button class = "buy-resource">+</button>
+                </div>
+    
+                <div class = "resource">
+                    <img src = "assets/Wood.png"; id = "resource-wood">
+                    <div id = "wood">
+                        <label id = "wood-amount"></label>
+                        <div id = "wood-total-wood"></div>
+                    </div>
+                    <button class = "buy-resource">+</button>
+                </div>
+    
+                <div class = "resource">
+                    <img src = "assets/Stone.png"; id = "resource-stone">
+                    <div id = "stone">
+                        <label id = "stone-amount"></label>
+                        <div id = "stone-total-stones"></div>
+                    </div>
+                    <button class = "buy-resource">+</button>
+                </div>
+    
+                <div class = "resource">
+                    <img src = "assets/Energy.png"; id = "resource-energy">
+                    <div id = "energy">
+                        <label id = "energy-amount"></label>
+                        <div id = "energy-total-energy"></div>
+                    </div>
+                    <button class = "buy-resource">+</button>
+                </div>
+            </div>
+    
+            <div id = "city-level-bar">
+                <div class = "resource">
+                    <div id = "omg">
+                        <label id = "city-lvl"></label>         
+                        <img src="assets/Star.png" id = "resource-xp">
+                    </div>
+                
+    
+                    <div id = "xp">
+                        <label id = "xp-amount"></label>
+                        <div id = "xp-total-xp"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div id = bottom-middle-bar>
+                <div>
+                    <label id = "building-text-holder">Wood Storage (lvl 1)</label>
+                </div>
+    
+                <div id = "button-holders">
+                    <button id = "info-button"></button>
+                    <button id = "upgrade-button"></button>
+                </div>
+            </div>
+    
+            <div id="info-box">
+
+            </div>
+
+            <div id="upgrade-box">
+                
+                <div id = "upgrade-building-name">
+                    <label>Wood Storage (lvl 1)</label>
+                    <button id = "exit-upgrade">x</button>
+                </div>
+                
+                <div id = "upgrade-wrapper">
+                    <div id = "upg-img">
+                        <img id = "upgrade-image"; src = "assets/Wood_storage_lvl2.png">
+                    </div>
+
+                    <div id="upg-resources">
+                        <div class = "resource-cost">
+                            <img class = "shop-resource-cost-image"; src = "assets/Coin.png">
+                            <label class = "resource-amount"></label>
                         </div>
 
-                        <div class = "card-bottom-side">
-                            <label class = "building-name">Wood storage</label>
+                        <div class = "resource-cost">
+                            <img class = "shop-resource-cost-image"; src = "assets/Wood.png">
+                            <label class = "resource-amount"></label>
+                        </div>
+
+                        <div class = "resource-cost">
+                            <img class = "shop-resource-cost-image"; src = "assets/Stone.png">
+                            <label class = "resource-amount"></label>
+                        </div>
+
+                        <div class = "resource-cost">
+                            <img class = "shop-resource-cost-image"; src = "assets/Energy.png">
+                            <label class = "resource-amount"></label>
+                        </div>
+
+                        <div class = "resource-cost">
+                            <img class = "shop-resource-cost-image"; src = "assets/Star.png">
+                            <label class = "resource-amount"></label>
+                        </div>
+
+                        <div id = "upg-btn">
+                            <div id = "upg-img-holder"></div>
                         </div>
                     </div>
-                </li>
-            </ul>
-        </div>
-        
-        
-        <button id = "shop-activate"></button>
-
-        <div id = "resource-bar">
-            <div class = "resource">
-                <img src="assets/Gem.png" id = "resource-gem">
-                <div id = "gems">
-                    <label id = "gem-amount"></label>
-                </div>
-                <button class = "buy-resource">+</button>
-            </div>
-
-            <div class = "resource">
-                <img src="assets/Coin.png" id = "resource-coin">
-                <div id = "coins">
-                    <label id = "coin-amount"></label>
-                    <div id = "coin-total-coins"></div>
-                </div>
-
-                <button class = "buy-resource">+</button>
-            </div>
-
-            <div class = "resource">
-                <img src = "assets/Wood.png"; id = "resource-wood">
-                <div id = "wood">
-                    <label id = "wood-amount"></label>
-                    <div id = "wood-total-wood"></div>
-                </div>
-                <button class = "buy-resource">+</button>
-            </div>
-
-            <div class = "resource">
-                <img src = "assets/Stone.png"; id = "resource-stone">
-                <div id = "stone">
-                    <label id = "stone-amount"></label>
-                    <div id = "stone-total-stones"></div>
-                </div>
-                <button class = "buy-resource">+</button>
-            </div>
-
-            <div class = "resource">
-                <img src = "assets/Energy.png"; id = "resource-energy">
-                <div id = "energy">
-                    <label id = "energy-amount"></label>
-                    <div id = "energy-total-energy"></div>
-                </div>
-                <button class = "buy-resource">+</button>
-            </div>
-        </div>
-
-        <div id = "city-level-bar">
-            <div class = "resource">
-                <div id = "omg">
-                    <label id = "city-lvl">1</label>         
-                    <img src="assets/Star.png" id = "resource-xp">
-                </div>
-            
-
-                <div id = "xp">
-                    <label id = "xp-amount"></label>
-                    <div id = "xp-total-xp"></div>
                 </div>
             </div>
         </div>
-        
-        
-
         
         <script src = "game.js"></script>
 
-        <script src="menus/Start menu/data.js"></script>
-        <script src="menus/Start menu/objects.js"></script>
-        <script src="menus/Start menu/click.js"></script>
-        <script src="menus/Start menu/draw.js"></script>
+        <script src = "menus/Start menu/data.js"></script>
+        <script src = "menus/Start menu/main_objects.js"></script>
+        <script src = "menus/Start menu/map_objects.js"></script>
+        <script src = "menus/Start menu/shop_objects.js"></script>
+        <script src = "menus/Start menu/click.js"></script>
+        <script src = "menus/Start menu/draw.js"></script>
 
 
     </body>
