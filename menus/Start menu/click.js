@@ -6,8 +6,12 @@ let shop_open = false, shop_locked = false;
 //Shop building cards
 const buildings_list = document.getElementsByClassName("card-wrapper");
 let buy_building = {
-    selected: false,
     image: undefined
+}
+
+let selected_building = {
+    i: undefined,
+    j: undefined
 }
 
 shop_activate.addEventListener('click', () => {
@@ -55,21 +59,19 @@ c.addEventListener("mousemove" , (e) => {
     const j = Math.floor(e.pageX / TILE_W * 4 / 3);
     const i = Math.floor(((1.70 * e.pageY - (j % 2) * TILE_H))/ TILE_H);
    
-    if(i >= MAP_H || j >= MAP_H || i < 0 || j< 0)return;
+    if(i >= MAP_H || j >= MAP_H || i < 0 || j < 0)return;
 
     if(tiles[i][j].hasBuilding)document.body.style.cursor = "pointer";
     else document.body.style.cursor = "auto";
     
+
+
     if(!buy_building.image)return;
-    
-    closeShop();
-    
-    
-    ctx.clearRect(0, 0, c.width, c.height);
     drawEverything();
+    closeShop();
     if(!tiles[i][j].occupied)return;
     ctx.drawImage(buy_building.image, tiles[i][j].x + (TILE_W - 110) / 2, tiles[i][j].y + (TILE_H - 110) / 2 - 36, 110, 110);
-    
+
 })
 
 c.addEventListener("click", (e) => {
@@ -80,12 +82,13 @@ c.addEventListener("click", (e) => {
     
     if(tiles[i][j].hasBuilding){
         buildings_bought[i][j].openInfoAndUpgrade();
+        selected_building.i = i;
+        selected_building.j = j;
     }
 
     if(buy_building.image){
         let cur_building_selected = shop_buildings.get(buy_building.image.src);
         
-        ctx.clearRect(0, 0, c.width, c.height);
         drawEverything();
 
         const building_x = tiles[i][j].x + (TILE_W - 110) / 2;
@@ -101,15 +104,15 @@ c.addEventListener("click", (e) => {
                  cur_building_selected.stone_cost > player.stone || cur_building_selected.energy_cost + player.energy > player.storage_energy){
 
         }else{
-            ctx.drawImage(buy_building.image, building_x, building_y, 110, 110);
+            //ctx.drawImage(buy_building.image, building_x, building_y, 110, 110);
             tiles[i][j].hasBuilding = true;
             tiles[i][j].buildsrc = buy_building.image;
             //If the upper one doesnt work
             //tiles[i][j].buildsrc = buy_building.image.src;
 
-            // buildings_bought[i][j] = new Buildings_Bought(building_x, building_y, buy_building.image);
             shop_buildings.get(buy_building.image.src).buy(building_x, building_y, i, j);
             shop_buildings.get(buy_building.image.src).update();
+            drawEverything();
 
             player.coins -= cur_building_selected.coin_cost;
             player.wood -= cur_building_selected.wood_cost;
@@ -120,11 +123,8 @@ c.addEventListener("click", (e) => {
         }
 
         buy_building.image = undefined;
-        buy_building.selected = false;
         shop_locked = false;
     }
-    // const building_x = tiles[i][j].x + (TILE_W - 110) / 2;
-    // const building_y =  tiles[i][j].y + (TILE_H - 110) / 2 - 36
 });
 
 
@@ -136,14 +136,19 @@ upgrade_info_box.addEventListener("click" , () => {
 
 const upgrade_building = document.getElementById("upgrade-button");
 upgrade_building.addEventListener("click", (e) => {
-    const j = Math.floor(e.pageX / TILE_W * 4 / 3);
-    const i = Math.floor(((1.70 * e.pageY - (j % 2) * TILE_H))/ TILE_H);
     document.getElementById("upgrade-box").style.display = "flex";
     const bottom_bar = document.getElementById("bottom-middle-bar");
     bottom_bar.style.display = "none";
-})
+    buildings_bought[selected_building.i][selected_building.j].showUpgrade();
+});
 
 const exit_upgrade_building = document.getElementById("exit-upgrade");
 exit_upgrade_building.addEventListener("click" , () => {
     document.getElementById("upgrade-box").style.display = "none";
-})
+});
+
+const upg_building = document.getElementById("upg-img-holder");
+upg_building.addEventListener("click" , () => {
+    buildings_bought[selected_building.i][selected_building.j].upgradeBuilding();
+    drawEverything();
+});

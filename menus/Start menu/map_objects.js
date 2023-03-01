@@ -124,24 +124,68 @@ class WS_Bought{
         this.y = y;
         this.ind1 = ind1;
         this.ind2 = ind2;
-        this.src = document.getElementById("wood-storage-lvl1");
+        this.src =  `/assets/Wood_storage_lvl1.png`;
         this.level = 1;
         this.w = 110;
         this.h = 110;
     }
 
     draw(){
-        ctx.drawImage(this.src, this.x, this.y, this.w, this.h);
+        let img = new Image();
+        img.src = this.src;
+        ctx.drawImage(img, this.x, this.y - 3 * (this.level - 1), this.w, this.h);
     }
 
     upgradeBuilding(){
+        if(this.level == ws_max_level)return;
+
         this.level++;
-        this.src = document.getElementById(`wood-storage-lvl${this.level}`);
-        this.draw();
+        
+        if(ws_coin_upgrade[this.level] > player.coins || 
+           ws_wood_upgrade[this.level] > player.wood || 
+           ws_stone_upgrade[this.level] > player.stone || 
+           ws_energy_cost + player.energy > player.storage_energy){
+            this.level--;
+        }else{
+            this.src = `/assets/Wood_storage_lvl${this.level}.png`;
+            this.showUpgrade();
+            player.coins -= ws_coin_upgrade[this.level];
+            player.wood -= ws_wood_upgrade[this.level];
+            player.stone -= ws_stone_upgrade[this.level];
+            player.energy += ws_energy_cost[this.level];
+            player.xp += ws_xp_gain[this.level];
+            player.updateResources();
+        }
     }
 
     showInfo(){
 
+    }
+
+    showUpgrade(){
+        if(this.level == ws_max_level){
+            document.getElementById("upgrade-image").src = `/assets/Wood_storage_lvl${this.level}.png`;
+            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Wood storage lvl (${this.level})`;
+            const upgrade_container = document.getElementById("upg-resources");
+            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
+            resources_upgrade[0].innerHTML = "Maxed"
+            resources_upgrade[1].innerHTML = "Maxed";
+            resources_upgrade[2].innerHTML = "Maxed";
+            resources_upgrade[3].innerHTML = "Maxed";
+            resources_upgrade[4].innerHTML = "Maxed";
+            return;
+        }
+
+        document.getElementById("upgrade-image").src = `/assets/Wood_storage_lvl${this.level + 1}.png`;
+        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Wood storage lvl (${this.level})`;
+
+        const upgrade_container = document.getElementById("upg-resources");
+        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
+        resources_upgrade[0].innerHTML = ws_coin_upgrade[this.level + 1];
+        resources_upgrade[1].innerHTML = ws_wood_upgrade[this.level + 1];
+        resources_upgrade[2].innerHTML = ws_stone_upgrade[this.level + 1];
+        resources_upgrade[3].innerHTML = ws_energy_cost[this.level + 1];
+        resources_upgrade[4].innerHTML = ws_xp_gain[this.level + 1];
     }
 
     openInfoAndUpgrade(){

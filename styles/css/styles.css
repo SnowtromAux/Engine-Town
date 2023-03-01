@@ -257,8 +257,8 @@ button {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
-  height: 50vh;
-  width: 50vw;
+  height: 27vw;
+  width: 40vw;
   border: 3px solid black; }
   #upgrade-box #upgrade-building-name {
     width: 100%;
@@ -269,7 +269,7 @@ button {
     background-color: chocolate; }
     #upgrade-box #upgrade-building-name #exit-upgrade {
       position: absolute;
-      width: 2vw;
+      width: 3vh;
       height: 3vh;
       right: 1vw;
       top: 1vh;

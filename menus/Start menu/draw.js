@@ -128,6 +128,7 @@ function calculateXpPart(){
 }
 
 function drawEverything(){
+    ctx.clearRect(0, 0, c.width, c.height);
     drawStartMenu();
     addResources();
 }
