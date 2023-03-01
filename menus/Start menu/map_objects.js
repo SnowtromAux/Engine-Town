@@ -133,7 +133,18 @@ class WS_Bought{
     draw(){
         let img = new Image();
         img.src = this.src;
-        ctx.drawImage(img, this.x, this.y - 3 * (this.level - 1), this.w, this.h);
+        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
+        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
+        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
+        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
+        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
+        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
+        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
+        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
+        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
+        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
+        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
+        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
     }
 
     upgradeBuilding(){

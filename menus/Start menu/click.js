@@ -70,7 +70,7 @@ c.addEventListener("mousemove" , (e) => {
     drawEverything();
     closeShop();
     if(!tiles[i][j].occupied)return;
-    ctx.drawImage(buy_building.image, tiles[i][j].x + (TILE_W - 110) / 2, tiles[i][j].y + (TILE_H - 110) / 2 - 36, 110, 110);
+    ctx.drawImage(buy_building.image, tiles[i][j].x + (TILE_W - 110) / 2, tiles[i][j].y + (TILE_H - 110) / 2 - 36 - 5, 110, 110);
 
 })
 
