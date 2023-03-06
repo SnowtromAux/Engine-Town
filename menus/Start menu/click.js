@@ -57,8 +57,9 @@ function drawBuyBuilding(e, path){
 
 c.addEventListener("mousemove" , (e) => {
     const j = Math.floor(e.pageX / TILE_W * 4 / 3);
-    const i = Math.floor(((1.70 * e.pageY - (j % 2) * TILE_H))/ TILE_H);
-   
+    const i = Math.floor(((1.70 * e.pageY - (j % 2) * (TILE_H - 64)))/ TILE_H);
+    
+
     if(i >= MAP_H || j >= MAP_H || i < 0 || j < 0)return;
 
     if(tiles[i][j].hasBuilding)document.body.style.cursor = "pointer";
@@ -76,7 +77,7 @@ c.addEventListener("mousemove" , (e) => {
 
 c.addEventListener("click", (e) => {
     const j = Math.floor(e.pageX / TILE_W * 4 / 3);
-    const i = Math.floor(((1.70 * e.pageY - (j % 2) * TILE_H))/ TILE_H);
+    const i = Math.floor(((1.70 * e.pageY - (j % 2) * (TILE_H - 64)))/ TILE_H);
 
     if(i >= MAP_H || j >= MAP_H || i < 0 || j< 0)return;
     

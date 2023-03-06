@@ -285,9 +285,8 @@ button {
       #upgrade-box #upgrade-wrapper #upg-img #upgrade-image {
         width: 90%;
         position: relative;
-        top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%); }
+        transform: translateX(-50%); }
     #upgrade-box #upgrade-wrapper #upg-resources {
       display: flex;
       flex-direction: column;

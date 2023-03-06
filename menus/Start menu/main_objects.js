@@ -7,10 +7,10 @@ class Player{
         this.stone = 100000;
         this.energy = 0;
         this.xp = 0;
-        this.storage_coin = 500000;
-        this.storage_wood = 200000;
+        this.storage_coin = 1000000;
+        this.storage_wood = 100000;
         this.storage_stone = 100000;
-        this.storage_energy = 500000;
+        this.storage_energy = 200000;
     }
 
     updateResources(){

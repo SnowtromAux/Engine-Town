@@ -135,6 +135,18 @@ function drawEverything(){
 
 fetchData().then(() => {
     drawEverything();
+    buildings_bought[56][57] = new GM_Bought(tiles[56][57].x + (TILE_W - 110) / 2, tiles[56][57].y + (TILE_H - 110) / 2 - 36, 56, 57);
+    buildings_bought[56][56] = new WNM_Bought(tiles[56][56].x + (TILE_W - 110) / 2, tiles[56][56].y + (TILE_H - 110) / 2 - 36, 56, 56);
+    buildings_bought[57][56] = new MC_Bought(tiles[57][56].x + (TILE_W - 110) / 2, tiles[57][56].y + (TILE_H - 110) / 2 - 36, 57, 56);
+
+    tiles[56][57].hasBuilding = true;
+    tiles[56][56].hasBuilding = true;
+    tiles[57][56].hasBuilding = true;
+
+    buildings_bought[56][57].draw();
+    buildings_bought[56][56].draw();
+    buildings_bought[57][56].draw();
+
     window.scrollBy(CANVAS_W, CANVAS_H);
 });
 
