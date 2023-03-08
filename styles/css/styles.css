@@ -193,8 +193,37 @@ button {
           margin-top: 2vh;
           margin-bottom: 1vh; }
         .buildings-shop .card-wrapper .building-card .card-left-side .building-image {
+          position: relative;
           width: 12vw;
           cursor: pointer; }
+          .buildings-shop .card-wrapper .building-card .card-left-side .building-image > img {
+            width: 100%; }
+          .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status {
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            margin-top: 1.5vh; }
+            .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .status-img {
+              width: 4vw; }
+            .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .unlockable {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin-bottom: 1vh; }
+              .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .unlockable .unlocked {
+                position: absolute;
+                width: 5vh; }
+              .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .unlockable > label {
+                font-size: 4vh;
+                font-weight: bold;
+                color: white; }
+              .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .unlockable > img {
+                width: 5vh; }
       .buildings-shop .card-wrapper .building-card .card-right-side {
         display: flex;
         flex-direction: column;
@@ -219,7 +248,7 @@ button {
       .buildings-shop .card-wrapper .card-bottom-side .building-name {
         font-size: 3vh; }
 
-#bottom-middle-bar {
+#bottom-middle-bar, #bottom-middle-bar-2 {
   position: fixed;
   display: none;
   flex-direction: column;
@@ -232,23 +261,27 @@ button {
   align-items: center;
   border-radius: 10%;
   background-color: brown; }
-  #bottom-middle-bar #building-text-holder {
+  #bottom-middle-bar #building-text-holder, #bottom-middle-bar-2 #building-text-holder {
     cursor: pointer; }
-  #bottom-middle-bar #button-holders {
+  #bottom-middle-bar #button-holders, #bottom-middle-bar-2 #button-holders {
     display: flex;
     background-color: chocolate; }
-  #bottom-middle-bar #info-button, #bottom-middle-bar #upgrade-button {
+  #bottom-middle-bar #info-button, #bottom-middle-bar #upgrade-button, #bottom-middle-bar-2 #info-button, #bottom-middle-bar-2 #upgrade-button {
     width: 6vw;
     height: 6vw;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat; }
-  #bottom-middle-bar #info-button {
+  #bottom-middle-bar #info-button, #bottom-middle-bar-2 #info-button {
     background-image: url("../../assets/Info.png"); }
-  #bottom-middle-bar #upgrade-button {
+  #bottom-middle-bar #upgrade-button, #bottom-middle-bar-2 #upgrade-button {
     background-image: url("../../assets/Upgrade.png");
     margin-left: 3vw; }
+
+#bottomo-middle-bar-2 {
+  width: 22.5vw;
+  height: 12vw; }
 
 #upgrade-box {
   position: fixed;

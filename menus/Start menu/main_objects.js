@@ -2,15 +2,15 @@ class Player{
     constructor(){
         this.city_level = 1;
         this.gems = 150;
-        this.coins = 100000;
-        this.wood = 100000;
-        this.stone = 100000;
-        this.energy = 0;
+        this.coins = 1000000;
+        this.wood = 1000000;
+        this.stone = 1000000;
+        this.energy = 13;
         this.xp = 0;
         this.storage_coin = 1000000;
-        this.storage_wood = 100000;
-        this.storage_stone = 100000;
-        this.storage_energy = 200000;
+        this.storage_wood = 1000000;
+        this.storage_stone = 1000000;
+        this.storage_energy = 2000;
     }
 
     updateResources(){

@@ -90,9 +90,47 @@
                     margin-bottom: 1vh;
                 }
                 .building-image{
+                    position: relative;
                     width: 12vw;
+                    //ako e unlocked
                     cursor: pointer;
+                    >img{
+                        width: 100%;   
+                    }
+                    .status{
+                        position: absolute;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        flex-direction: column;
+                        left: 50%;
+                        top: 50%;
+                        transform: translate(-50%, -50%);
+                        margin-top: 1.5vh;
+                        .status-img{
+                            width: 4vw;
+                        }
+                        .unlockable{
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            margin-bottom: 1vh;
+                            .unlocked{
+                                position: absolute;
+                                width: 5vh;
+                            }
+                            >label{
+                                font-size: 4vh;
+                                font-weight: bold;
+                                color: white;
+                            }
+                            >img{
+                                width: 5vh;
+                            }
+                        }
+                    }
                 }
+                
             }
             
             .card-right-side{
@@ -133,7 +171,7 @@
     }
 }
 
-#bottom-middle-bar{
+#bottom-middle-bar, #bottom-middle-bar-2{
     position: fixed;
     // display: flex;
     display: none;
@@ -169,4 +207,9 @@
         background-image: url("../../assets/Upgrade.png");
         margin-left: 3vw;
     }
+}
+
+#bottomo-middle-bar-2{
+    width: 22.5vw;
+    height: 12vw;    
 }

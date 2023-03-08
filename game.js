@@ -1,4 +1,18 @@
-let menu = "start_menu";
+function update() {
+    constUpdateStartMenu();
+    if(menu == "start_menu")updateStartMenu();
+}
 
-var c = document.getElementById("myCanvas");
-var ctx = c.getContext("2d");
+// function draw(){
+
+// }
+  
+function startAnimation() {
+    requestAnimationFrame(() => {
+        update();
+        setTimeout(startAnimation, time_loop);
+    });
+}
+
+startAnimation();
+// draw();

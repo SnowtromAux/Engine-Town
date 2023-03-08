@@ -135,9 +135,9 @@ function drawEverything(){
 
 fetchData().then(() => {
     drawEverything();
-    buildings_bought[56][57] = new GM_Bought(tiles[56][57].x + (TILE_W - 110) / 2, tiles[56][57].y + (TILE_H - 110) / 2 - 36, 56, 57);
-    buildings_bought[56][56] = new WNM_Bought(tiles[56][56].x + (TILE_W - 110) / 2, tiles[56][56].y + (TILE_H - 110) / 2 - 36, 56, 56);
-    buildings_bought[57][56] = new MC_Bought(tiles[57][56].x + (TILE_W - 110) / 2, tiles[57][56].y + (TILE_H - 110) / 2 - 36, 57, 56);
+    buildings_bought[56][57] = new GM_Bought(tiles[56][57].x + (TILE_W - 110) / 2, tiles[56][57].y + (TILE_H - 110) / 2 - 36, 56, 57, "producer", gm_coin_upgrade, gm_wood_upgrade, gm_stone_upgrade, gm_energy_cost, gm_xp_gain, gm_max_level, 'assets/Gold_mine_lvl', 'Gold Mine', gm_unlockable);
+    buildings_bought[56][56] = new WNM_Bought(tiles[56][56].x + (TILE_W - 110) / 2, tiles[56][56].y + (TILE_H - 110) / 2 - 36, 56, 56, "storage", wnm_coin_upgrade, wnm_wood_upgrade, wnm_stone_upgrade, wnm_energy_cost, wnm_xp_gain, wnm_max_level, 'assets/Windmill_lvl', 'Windmill', wnm_unlockable);
+    buildings_bought[57][56] = new MC_Bought(tiles[57][56].x + (TILE_W - 110) / 2, tiles[57][56].y + (TILE_H - 110) / 2 - 36, 57, 56, "townhall", mc_coin_upgrade, mc_wood_upgrade, mc_stone_upgrade, mc_energy_cost, mc_xp_gain, mc_max_level, 'assets/Main_castle_lvl', 'Main castle', mc_unlockable);
 
     tiles[56][57].hasBuilding = true;
     tiles[56][56].hasBuilding = true;

@@ -119,21 +119,30 @@ class Layer2{
 
 
 
-class GM_Bought{
-    constructor(x, y, ind1, ind2){
+class Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
         this.x = x;
         this.y = y;
         this.ind1 = ind1;
         this.ind2 = ind2;
-        this.src =  `/assets/Gold_mine_lvl1.png`;
+        this.type = type;
         this.level = 1;
         this.w = 110;
         this.h = 110;
+        this.coin_upgrade = cu;
+        this.wood_upgrade = wu;
+        this.stone_upgrade = su;
+        this.energy_cost = ec;
+        this.xp_gain = xg;
+        this.max_level = ml;
+        this.src_path = sp;
+        this.name = name;
+        this.unlockable = unlock;
     }
 
     draw(){
         let img = new Image();
-        img.src = this.src;
+        img.src = `${this.src_path}${this.level}.png`;
         if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
         else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
         else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
@@ -148,25 +157,30 @@ class GM_Bought{
         else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
     }
 
+    changeSpecial(){
+
+    }
+
     upgradeBuilding(){
-        if(this.level == gm_max_level)return;
+        if(this.level == this.max_level)return;
 
         this.level++;
         
-        if(gm_coin_upgrade[this.level] > player.coins || 
-           gm_wood_upgrade[this.level] > player.wood || 
-           gm_stone_upgrade[this.level] > player.stone || 
-           gm_energy_cost + player.energy > player.storage_energy){
+        if(this.coin_upgrade[this.level] > player.coins || 
+           this.wood_upgrade[this.level] > player.wood || 
+           this.stone_upgrade[this.level] > player.stone || 
+           this.energy_cost + player.energy > player.storage_energy ||
+           mc.level < this.unlockable[mc.level]){
             this.level--;
         }else{
-            this.src = `/assets/Gold_mine_lvl${this.level}.png`;
             this.showUpgrade();
-            player.coins -= gm_coin_upgrade[this.level];
-            player.wood -= gm_wood_upgrade[this.level];
-            player.stone -= gm_stone_upgrade[this.level];
-            player.energy += gm_energy_cost[this.level];
-            player.xp += gm_xp_gain[this.level];
+            player.coins -= this.coin_upgrade[this.level];
+            player.wood -= this.wood_upgrade[this.level];
+            player.stone -= this.stone_upgrade[this.level];
+            player.energy += this.energy_cost[this.level];
+            player.xp += this.xp_gain[this.level];
             player.updateResources();
+            this.changeSpecial();
         }
     }
 
@@ -175,9 +189,9 @@ class GM_Bought{
     }
 
     showUpgrade(){
-        if(this.level == gm_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Gold_mine_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Gold mine lvl (${this.level})`;
+        if(this.level == this.max_level){
+            document.getElementById("upgrade-image").src = `${this.src_path}${this.level}.png`;
+            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `${this.name} lvl (${this.level})`;
             const upgrade_container = document.getElementById("upg-resources");
             let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
             resources_upgrade[0].innerHTML = "Maxed"
@@ -188,641 +202,164 @@ class GM_Bought{
             return;
         }
 
-        document.getElementById("upgrade-image").src = `/assets/Gold_mine_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Gold mine lvl (${this.level})`;
+        document.getElementById("upgrade-image").src = `${this.src_path}${this.level + 1}.png`;
+        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `${this.name} lvl (${this.level})`;
 
         const upgrade_container = document.getElementById("upg-resources");
         let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = gm_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = gm_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = gm_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = gm_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = gm_xp_gain[this.level + 1];
+        resources_upgrade[0].innerHTML = this.coin_upgrade[this.level + 1];
+        resources_upgrade[1].innerHTML = this.wood_upgrade[this.level + 1];
+        resources_upgrade[2].innerHTML = this.stone_upgrade[this.level + 1];
+        resources_upgrade[3].innerHTML = this.energy_cost[this.level + 1];
+        resources_upgrade[4].innerHTML = this.xp_gain[this.level + 1];
     }
 
     openInfoAndUpgrade(){
         const bottom_bar = document.getElementById("bottom-middle-bar");
         bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Gold mine (lvl ${this.level})`;
+        document.getElementById("building-text-holder").innerHTML = `${this.name} (lvl ${this.level})`;
     }
 }
 
-class SWM_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src =  `/assets/Sawmill_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+let imr = 0;
+class GM_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.production = gm_production[1];
+        this.produced = 0;
+        this.capacity = gm_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.production = gm_production[this.level];
+        this.capacity = gm_capacity[this.level];
     }
-
-    upgradeBuilding(){
-        if(this.level == swm_max_level)return;
-
-        this.level++;
-        
-        if(swm_coin_upgrade[this.level] > player.coins || 
-           swm_wood_upgrade[this.level] > player.wood || 
-           swm_stone_upgrade[this.level] > player.stone || 
-           swm_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Sawmill_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= swm_coin_upgrade[this.level];
-            player.wood -= swm_wood_upgrade[this.level];
-            player.stone -= swm_stone_upgrade[this.level];
-            player.energy += swm_energy_cost[this.level];
-            player.xp += swm_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
-
-    showInfo(){
-
-    }
-
-    showUpgrade(){
-        if(this.level == swm_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Sawmill_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Sawmill lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Sawmill_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Sawmill lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = swm_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = swm_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = swm_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = swm_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = swm_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Sawmill (lvl ${this.level})`;
+    update(){
+        this.produced += (1 / (3600000 / time_loop)) * this.production;
+        console.log("Gold: " + Math.floor(this.produced))
     }
 }
 
-class QRY_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src =  `/assets/Quarry_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+class SWM_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.production = swm_production[1];//production per hour
+        this.produced = 0;
+        this.capacity = swm_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.production = swm_production[this.level];
+        this.capacity = swm_capacity[this.level];
     }
-
-    upgradeBuilding(){
-        if(this.level == qry_max_level)return;
-
-        this.level++;
-        
-        if(qry_coin_upgrade[this.level] > player.coins || 
-           qry_wood_upgrade[this.level] > player.wood || 
-           qry_stone_upgrade[this.level] > player.stone || 
-           qry_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Quarry_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= qry_coin_upgrade[this.level];
-            player.wood -= qry_wood_upgrade[this.level];
-            player.stone -= qry_stone_upgrade[this.level];
-            player.energy += qry_energy_cost[this.level];
-            player.xp += qry_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
-
-    showInfo(){
-
-    }
-
-    showUpgrade(){
-        if(this.level == qry_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Quarry_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Quarry lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Quarry_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Quarry lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = qry_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = qry_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = qry_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = qry_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = qry_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Quarry (lvl ${this.level})`;
+    update(){
+        this.produced += 1 / (3600000 / time_loop) * this.production; 
+        console.log("Wood: " + Math.floor(this.produced));
     }
 }
 
-class GS_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src =  `/assets/Gold_storage_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+class QRY_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.production = qry_production[1];//production per hour
+        this.produced = 0;
+        this.capacity = qry_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.production = qry_production[this.level];
+        this.capacity = qry_capacity[this.level];
     }
-
-    upgradeBuilding(){
-        if(this.level == gs_max_level)return;
-
-        this.level++;
-        
-        if(gs_coin_upgrade[this.level] > player.coins || 
-           gs_wood_upgrade[this.level] > player.wood || 
-           gs_stone_upgrade[this.level] > player.stone || 
-           gs_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Gold_storage_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= gs_coin_upgrade[this.level];
-            player.wood -= gs_wood_upgrade[this.level];
-            player.stone -= gs_stone_upgrade[this.level];
-            player.energy += gs_energy_cost[this.level];
-            player.xp += gs_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
-
-    showInfo(){
-
-    }
-
-    showUpgrade(){
-        if(this.level == gs_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Gold_storage_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Gold storage lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Gold_storage_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Gold storage lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = gs_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = gs_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = gs_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = gs_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = gs_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Gold Storage (lvl ${this.level})`;
+    update(){
+        this.produced += 1 / (3600000 / time_loop) * this.production; 
+        console.log("Stone: " + Math.floor(this.produced));
     }
 }
 
 
-
-class WS_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src =  `/assets/Wood_storage_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+class GS_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.capacity = gs_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.capacity = gs_capacity[this.level];
     }
+    update(){
 
-    upgradeBuilding(){
-        if(this.level == ws_max_level)return;
-
-        this.level++;
-        
-        if(ws_coin_upgrade[this.level] > player.coins || 
-           ws_wood_upgrade[this.level] > player.wood || 
-           ws_stone_upgrade[this.level] > player.stone || 
-           ws_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Wood_storage_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= ws_coin_upgrade[this.level];
-            player.wood -= ws_wood_upgrade[this.level];
-            player.stone -= ws_stone_upgrade[this.level];
-            player.energy += ws_energy_cost[this.level];
-            player.xp += ws_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
-
-    showInfo(){
-
-    }
-
-    showUpgrade(){
-        if(this.level == ws_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Wood_storage_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Wood storage lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Wood_storage_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Wood storage lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = ws_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = ws_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = ws_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = ws_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = ws_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Wood Storage (lvl ${this.level})`;
     }
 }
 
-
-
-class SS_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src =  `/assets/Stone_storage_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+class WS_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.capacity = ws_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.capacity = ws_capacity[this.level];
     }
+    update(){
 
-    upgradeBuilding(){
-        if(this.level == ws_max_level)return;
-
-        this.level++;
-        
-        if(ss_coin_upgrade[this.level] > player.coins || 
-           ss_wood_upgrade[this.level] > player.wood || 
-           ss_stone_upgrade[this.level] > player.stone || 
-           ss_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Stone_storage_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= ss_coin_upgrade[this.level];
-            player.wood -= ss_wood_upgrade[this.level];
-            player.stone -= ss_stone_upgrade[this.level];
-            player.energy += ss_energy_cost[this.level];
-            player.xp += ss_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
-
-    showInfo(){
-
-    }
-
-    showUpgrade(){
-        if(this.level == ss_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Stone_storage_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Stone storage lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Stone_storage_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Stone storage lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = ss_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = ss_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = ss_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = ss_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = ss_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Stone Storage (lvl ${this.level})`;
     }
 }
 
-class MC_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src = `/assets/Main_castle_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+class SS_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.capacity = ss_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.capacity = ss_capacity[this.level];
     }
+    update(){
 
-    upgradeBuilding(){
-        if(this.level == mc_max_level)return;
-
-        this.level++;
-        
-        if(mc_coin_upgrade[this.level] > player.coins || 
-           mc_wood_upgrade[this.level] > player.wood || 
-           mc_stone_upgrade[this.level] > player.stone || 
-           mc_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Main_castle_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= mc_coin_upgrade[this.level];
-            player.wood -= mc_wood_upgrade[this.level];
-            player.stone -= mc_stone_upgrade[this.level];
-            player.energy += mc_energy_cost[this.level];
-            player.xp += mc_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
-
-    showInfo(){
-
-    }
-
-    showUpgrade(){
-        if(this.level == mc_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Main_castle_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Main castle lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Main_castle_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Main castle lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = mc_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = mc_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = mc_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = mc_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = mc_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Main castle (lvl ${this.level})`;
     }
 }
 
-class WNM_Bought{
-    constructor(x, y, ind1, ind2){
-        this.x = x;
-        this.y = y;
-        this.ind1 = ind1;
-        this.ind2 = ind2;
-        this.src = `/assets/Windmill_lvl1.png`;
-        this.level = 1;
-        this.w = 110;
-        this.h = 110;
+class WNM_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.capacity = wnm_capacity[1];
     }
-
-    draw(){
-        let img = new Image();
-        img.src = this.src;
-        if(this.level == 1)ctx.drawImage(img, this.x, this.y - 5, this.w, this.h);
-        else if(this.level == 2)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 3)ctx.drawImage(img, this.x, this.y - 9, this.w, this.h);
-        else if(this.level == 4)ctx.drawImage(img, this.x, this.y - 6, this.w, this.h);
-        else if(this.level == 5)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 6)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 7)ctx.drawImage(img, this.x, this.y - 8, this.w, this.h);
-        else if(this.level == 8)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 9)ctx.drawImage(img, this.x, this.y - 11, this.w, this.h);
-        else if(this.level == 10)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else if(this.level == 11)ctx.drawImage(img, this.x, this.y - 12, this.w, this.h);
-        else ctx.drawImage(img, this.x, this.y - 15, this.w, this.h);
+    changeSpecial(){
+        this.capacity = wnm_capacity[this.level];
     }
+    update(){
 
-    upgradeBuilding(){
-        if(this.level == wnm_max_level)return;
+    }
+}
 
-        this.level++;
+class MC_Bought extends Building_Bought{
+    constructor(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock){
+        super(x, y, ind1, ind2, type, cu, wu, su, ec, xg, ml, sp, name, unlock);
+        this.coin_capacity = mc_coin_cap[1];
+        this.wood_capacity = mc_wood_cap[1];
+        this.stone_capacity = mc_stone_cap[1];
+        this.energy_capacity = mc_energy_cap[1];
+    }
+    changeSpecial(){
+        this.coin_capacity = mc_coin_cap[this.level];
+        this.wood_capacity = mc_wood_cap[this.level];
+        this.stone_capacity = mc_stone_cap[this.level];
+        this.energy_capacity = mc_energy_cap[this.level];
+
         
-        if(wnm_coin_upgrade[this.level] > player.coins || 
-           wnm_wood_upgrade[this.level] > player.wood || 
-           wnm_stone_upgrade[this.level] > player.stone || 
-           wnm_energy_cost + player.energy > player.storage_energy){
-            this.level--;
-        }else{
-            this.src = `/assets/Windmill_lvl${this.level}.png`;
-            this.showUpgrade();
-            player.coins -= wnm_coin_upgrade[this.level];
-            player.wood -= wnm_wood_upgrade[this.level];
-            player.stone -= wnm_stone_upgrade[this.level];
-            player.energy += wnm_energy_cost[this.level];
-            player.xp += wnm_xp_gain[this.level];
-            player.updateResources();
-        }
-    }
+        gm.count = gm_count[this.level];
+        swm.count = swm_count[this.level];
+        qry.count = qry_count[this.level];
+        gs.count = gs_count[this.level];
+        ws.count = ws_count[this.level];
+        ss.count = ss_count[this.level];
+        wnm.count = wnm_count[this.level];
 
-    showInfo(){
+        gm.update();
+        swm.update();
+        qry.update();
+        gs.update();
+        ws.update();
+        ss.update();
+        wnm.update();
+
 
     }
+    update(){
 
-    showUpgrade(){
-        if(this.level == wnm_max_level){
-            document.getElementById("upgrade-image").src = `/assets/Windmill_lvl${this.level}.png`;
-            document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Windmill lvl (${this.level})`;
-            const upgrade_container = document.getElementById("upg-resources");
-            let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-            resources_upgrade[0].innerHTML = "Maxed"
-            resources_upgrade[1].innerHTML = "Maxed";
-            resources_upgrade[2].innerHTML = "Maxed";
-            resources_upgrade[3].innerHTML = "Maxed";
-            resources_upgrade[4].innerHTML = "Maxed";
-            return;
-        }
-
-        document.getElementById("upgrade-image").src = `/assets/Windmill_lvl${this.level + 1}.png`;
-        document.getElementById("upgrade-building-name").getElementsByTagName("label")[0].innerHTML = `Windmill lvl (${this.level})`;
-
-        const upgrade_container = document.getElementById("upg-resources");
-        let resources_upgrade = upgrade_container.getElementsByClassName("resource-amount");
-        resources_upgrade[0].innerHTML = wnm_coin_upgrade[this.level + 1];
-        resources_upgrade[1].innerHTML = wnm_wood_upgrade[this.level + 1];
-        resources_upgrade[2].innerHTML = wnm_stone_upgrade[this.level + 1];
-        resources_upgrade[3].innerHTML = wnm_energy_cost[this.level + 1];
-        resources_upgrade[4].innerHTML = wnm_xp_gain[this.level + 1];
-    }
-
-    openInfoAndUpgrade(){
-        const bottom_bar = document.getElementById("bottom-middle-bar");
-        bottom_bar.style.display = "flex";
-        document.getElementById("building-text-holder").innerHTML = `Windmill (lvl ${this.level})`;
     }
 }

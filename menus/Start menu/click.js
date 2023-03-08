@@ -39,7 +39,7 @@ function openShop(){
 
 
 for(let i = 0;i < buildings_list.length;i++){
-    const img = buildings_list[i].getElementsByClassName("building-image")[0];
+    const img = buildings_list[i].getElementsByClassName("building-img")[0];
     img.addEventListener('click', (e) => {
         drawBuyBuilding(e, `${img.src}`);
         shop_locked = true;
@@ -59,7 +59,6 @@ c.addEventListener("mousemove" , (e) => {
     const j = Math.floor(e.pageX / TILE_W * 4 / 3);
     const i = Math.floor(((1.70 * e.pageY - (j % 2) * (TILE_H - 64)))/ TILE_H);
     
-
     if(i >= MAP_H || j >= MAP_H || i < 0 || j < 0)return;
 
     if(tiles[i][j].hasBuilding)document.body.style.cursor = "pointer";
