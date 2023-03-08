@@ -171,6 +171,7 @@ class Shop_WS{
         if(this.count == 0){
             //Stane cherno i s katinar
             //Trqbva da nameri nai malkiqt level na koito shte poluchish nova sgrada
+            ws_card.getElementsByClassName("building-img")[0].style.cursor = "none";
             for(let i = 1;i <= mc_max_level;i++){
                 if(ws_count[i] == 1){
                     ws_card.getElementsByClassName("unlockable")[0].getElementsByTagName("label")[0].innerHTML = `${i}`;                    
@@ -185,6 +186,7 @@ class Shop_WS{
         }else{
             ws_counts.innerHTML = `${this.owned} / ${this.count}`;
             if(this.count == this.owned){
+                ws_card.getElementsByClassName("building-img")[0].style.cursor = "auto";
                 ws_card.style.backgroundColor = "gray";
                 ws_card.style.opacity = "0.8";
                 if(this.count == ws_count[mc_max_level]){
@@ -205,6 +207,7 @@ class Shop_WS{
                 }
             }else{
                 //Normalen transparent background
+                ws_card.getElementsByClassName("building-img")[0].style.cursor = "pointer";
                 ws_card.style.backgroundColor = "transparent";
                 ws_card.style.opacity = "1";
                 ws_card.getElementsByClassName("status")[0].style.display = "none";
