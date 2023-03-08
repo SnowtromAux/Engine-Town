@@ -194,8 +194,7 @@ button {
           margin-bottom: 1vh; }
         .buildings-shop .card-wrapper .building-card .card-left-side .building-image {
           position: relative;
-          width: 12vw;
-          cursor: pointer; }
+          width: 12vw; }
           .buildings-shop .card-wrapper .building-card .card-left-side .building-image > img {
             width: 100%; }
           .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status {
