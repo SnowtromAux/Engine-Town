@@ -220,7 +220,8 @@ button {
               .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .unlockable > label {
                 font-size: 4vh;
                 font-weight: bold;
-                color: white; }
+                color: white;
+                margin-top: 0.5vh; }
               .buildings-shop .card-wrapper .building-card .card-left-side .building-image .status .unlockable > img {
                 width: 5vh; }
       .buildings-shop .card-wrapper .building-card .card-right-side {
